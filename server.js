@@ -1,10 +1,12 @@
 const express = require('express'),
-	bodyParser = require('body-parser'),
+        bodyParser = require('body-parser'),
 	fs = require('fs'),
 	path = require('path');
 
 const app = express(),
-	port = process.env.PORT || 8000;
+	  config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'))),
+      port = config.port || 8000;
+      console.log(port)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
