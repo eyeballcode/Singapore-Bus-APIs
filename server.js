@@ -17,11 +17,11 @@ app.use((req, res, next) => {
 	next();
 });
 
-fs.readdir(path.join(__dirname, 'routes'), (err, files) => {
-	files.filter(name => name.endsWith('.js')).forEach(name => {
-		const router = require(path.join(__dirname, 'routes', name));
+fs.readdir(path.join(__dirname, 'controllers'), (err, files) => {
+	files.filter(name => name !== 'Controller.js' && name.endsWith('.js')).forEach(name => {
+		const Controller = require(path.join(__dirname, 'controllers', name));
 		console.log(`Using router ${name.replace(/\.js$/, '')}.`);
-		app.use(router.mountPath, router.router);
+		app.use(Controller.mountPoint, new Controller().router);
 	});
 });
 
