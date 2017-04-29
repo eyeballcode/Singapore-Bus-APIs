@@ -6,7 +6,6 @@ const express = require('express'),
 const app = express(),
 	  config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'))),
       port = config.port || 8000;
-      console.log(port)
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
