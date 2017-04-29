@@ -37,7 +37,6 @@ api.get('/:busStop', (req, res) => {
 				var difference = now - stop.asOf;
 				stop.services.forEach(service => {
 					stop.timings[service].buses = stop.timings[service].buses.map(bus => {
-						bus.arrival = new Date(+bus.arrival - difference);
 						bus.secondsToArrival = Math.floor(Math.max(0, (bus.arrival - now) / 1000));
 						return bus;
 					});
