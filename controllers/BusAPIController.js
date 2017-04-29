@@ -1,9 +1,11 @@
 const Controller = require('./Controller'),
 	BusTimingsAPIModel = require('../models/BusTimingsAPIModel'),
-	BusAPIListModel = require('../models/BusAPIListModel');
+	BusAPIListModel = require('../models/BusAPIListModel'),
+	ActiveBusServicesModel = require('../models/ActiveBusServicesModel');
 
 let busTimingsAPIModel = new BusTimingsAPIModel(),
-	busAPIListModel = new BusAPIListModel();
+	busAPIListModel = new BusAPIListModel(),
+	activeBusServicesModel = new ActiveBusServicesModel();
 
 class BusAPIController extends Controller {
 
@@ -11,6 +13,17 @@ class BusAPIController extends Controller {
 		super();
 		this.router.get('/', this.apiListAPI);
 		this.router.get('/timings/:busStop', this.arrivalsAPI);
+		this.router.get('/services/active', this.activeServicesAPI);
+	}
+
+	activeServicesAPI(req, res) {
+		activeBusServicesModel.getActiveBusServices(services => {
+			if (!services.currentlyActiveServices) {
+				res.status(500).json({
+					error: 'Server is currently building data!'
+				});
+			} else res.json(services);
+		});
 	}
 
 	apiListAPI(req, res) {
