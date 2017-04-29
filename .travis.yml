@@ -4,6 +4,9 @@ node_js:
 cache:
   directories:
     - node_modules
-script: 
+
+before_install:
 	- echo '{"accountKey":"key"}' > config.json
+
+script: 
     - npm test
