@@ -1,13 +1,22 @@
 const Controller = require('./Controller'),
-	BusTimingsAPIModel = require('../models/BusTimingsAPIModel');
+	BusTimingsAPIModel = require('../models/BusTimingsAPIModel'),
+	BusAPIListModel = require('../models/BusAPIListModel');
 
-var busTimingsAPIModel = new BusTimingsAPIModel();
+let busTimingsAPIModel = new BusTimingsAPIModel(),
+	busAPIListModel = new BusAPIListModel();
 
 class BusAPIController extends Controller {
 
 	constructor() {
 		super();
+		this.router.get('/', this.apiListAPI);
 		this.router.get('/timings/:busStop', this.arrivalsAPI);
+	}
+
+	apiListAPI(req, res) {
+		busAPIListModel.getAPIList(list => {
+			res.json(list);
+		});
 	}
 
 	arrivalsAPI(req, res) {
