@@ -2,12 +2,12 @@ const Controller = require('./Controller'),
 	BusTimingsAPIModel = require('../models/BusTimingsAPIModel'),
 	BusAPIListModel = require('../models/BusAPIListModel'),
 	ActiveBusServicesModel = require('../models/ActiveBusServicesModel'),
-	BusServiceInfoModel = require('../models/BusServiceInfoModel');
+	TransitLinkModel = require('../models/TransitLinkModel');
 
 let busTimingsAPIModel = new BusTimingsAPIModel(),
 	busAPIListModel = new BusAPIListModel(),
 	activeBusServicesModel = new ActiveBusServicesModel(),
-	busServiceInfoModel = new BusServiceInfoModel();
+	transitLinkModel = new TransitLinkModel();
 
 class BusAPIController extends Controller {
 
@@ -18,16 +18,23 @@ class BusAPIController extends Controller {
 		this.router.get('/services/active', this.activeServicesAPI);
 		this.router.get('/services/:service/info', this.serviceInfoAPI);
 		this.router.get('/services/:service/stops', this.serviceStopsAPI)
+		this.router.get('/services/list', this.serviceListAPI);
+	}
+
+	serviceListAPI(req, res) {
+		transitLinkModel.getAllServices(services => {
+			res.json(services);
+		});
 	}
 
 	serviceStopsAPI(req, res) {
-		busServiceInfoModel.getServiceStops(req.params.service, info => {
+		transitLinkModel.getServiceStops(req.params.service, info => {
 			res.json(info);
 		});
 	}
 
 	serviceInfoAPI(req, res) {
-		busServiceInfoModel.getServiceInfo(req.params.service, info => {
+		transitLinkModel.getServiceInfo(req.params.service, info => {
 			res.json(info);
 		});
 	}

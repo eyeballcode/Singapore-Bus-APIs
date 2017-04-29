@@ -3,7 +3,7 @@ const TransitLink = require('../lib/transit-link.js'),
 
 const transitLinkAPI = new TransitLink()
 
-class BusServiceInfoModel extends Model {
+class TransitLinkModel extends Model {
 
 	constructor() {
 		super();
@@ -33,6 +33,12 @@ class BusServiceInfoModel extends Model {
 		}));
 	}
 
+	getAllServices(callback) {
+	    transitLinkAPI.listAllBusServices(services => {
+			callback(services);
+		});
+	}
+
 }
 
-module.exports = BusServiceInfoModel;
+module.exports = TransitLinkModel;
