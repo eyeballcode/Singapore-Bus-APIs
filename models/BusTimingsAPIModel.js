@@ -5,8 +5,7 @@ const LTADataMall = require('lta-datamall')
 	Model = require('./Model');
 
 const BusTimingAPI = LTADataMall.BusTimingAPI,
-	configs = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json'))),
-	cache = new NodeCache({stdTTL: 15});
+	configs = JSON.parse(fs.readFileSync(path.join(__dirname, '../config.json')));
 
 class BusTimingsAPIModel extends Model {
 
@@ -15,16 +14,17 @@ class BusTimingsAPIModel extends Model {
 		this.busTimingAPI = new BusTimingAPI(configs.accountKey, {
 			requester: requester
 		});
+		this.cache = new NodeCache({stdTTL: 15});
 	}
 
 	getBusStopTimings(busStop, callback) {
-		cache.get(busStop, (err, stop) => {
+		this.cache.get(busStop, (err, stop) => {
 			if (!err) {
 				if (!stop) {
 					this.busTimingAPI.getTimingForStop(busStop, stop => {
 						stop.asOf = +new Date();
 						stop.isCached = false;
-						cache.set(busStop, stop, () => {
+						this.cache.set(busStop, stop, () => {
 							delete stop.asOf;
 							callback(stop);
 						});
