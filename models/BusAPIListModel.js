@@ -19,8 +19,8 @@ class BusAPIListModel extends Model {
 			paths: {
 				timings: '/bus/timings/:busStop',
 				'active-services': '/bus/services/active',
-				'service-info': '/bus/services/info/:service',
-				'service-stops': '/bus/services/info/:service/stops',
+				'service-info': '/bus/services/:service/info',
+				'service-stops': '/bus/services/:service/stops',
 				'service-list': '/bus/services/list'
 			}
 		});
