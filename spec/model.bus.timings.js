@@ -38,11 +38,13 @@ describe('The bus timings API', () => {
 		var api = new BusTimingsAPIModel(mockTimings(42161));
 		api.getBusStopTimings(42161, timings => {
 			var timing = timings.timings[985].buses[0];
-			expect(timing.secondsToArrival).toEqual(299);
+			var originalTiming = timing.secondsToArrival;
+			expect(originalTiming >= 299 && originalTiming <= 300).toBeTruthy();
 			setTimeout(() => {
 				api.getBusStopTimings(42161, timings => {
-					var timing = timings.timings[985].buses[0];
-					expect(timing.secondsToArrival).toEqual(298); // Caused by 1 sec delay
+					timing = timings.timings[985].buses[0];
+					var newTiming = timing.secondsToArrival;
+					expect(newTiming >= 298 && newTiming < 300).toEqual(true); // Caused by 1 sec delay
 					done();
 				});
 			}, 1000);
