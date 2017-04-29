@@ -4,43 +4,48 @@ const Controller = require('./Controller'),
 	ActiveBusServicesModel = require('../models/ActiveBusServicesModel'),
 	TransitLinkModel = require('../models/TransitLinkModel');
 
-let busTimingsAPIModel = new BusTimingsAPIModel(),
-	busAPIListModel = new BusAPIListModel(),
-	activeBusServicesModel = new ActiveBusServicesModel(),
-	transitLinkModel = new TransitLinkModel();
-
 class BusAPIController extends Controller {
 
-	constructor() {
+	constructor(requester) {
 		super();
-		this.router.get('/', this.apiListAPI);
-		this.router.get('/timings/:busStop', this.arrivalsAPI);
-		this.router.get('/services/active', this.activeServicesAPI);
-		this.router.get('/services/:service/info', this.serviceInfoAPI);
-		this.router.get('/services/:service/stops', this.serviceStopsAPI)
-		this.router.get('/services/list', this.serviceListAPI);
+
+		this.busTimingsAPIModel = new BusTimingsAPIModel(requester),
+		this.busAPIListModel = new BusAPIListModel(requester),
+		this.activeBusServicesModel = new ActiveBusServicesModel(requester),
+		this.transitLinkModel = new TransitLinkModel(requester);
+
+		this.get('/', this.apiListAPI);
+		this.get('/timings/:busStop', this.arrivalsAPI);
+		this.get('/services/active', this.activeServicesAPI);
+		this.get('/services/:service/info', this.serviceInfoAPI);
+		this.get('/services/:service/stops', this.serviceStopsAPI)
+		this.get('/services/list', this.serviceListAPI);
+	}
+
+	get(path, callback) {
+		this.router.get(path, callback.bind(this));
 	}
 
 	serviceListAPI(req, res) {
-		transitLinkModel.getAllServices(services => {
+		this.transitLinkModel.getAllServices(services => {
 			res.json(services);
 		});
 	}
 
 	serviceStopsAPI(req, res) {
-		transitLinkModel.getServiceStops(req.params.service, info => {
+		this.transitLinkModel.getServiceStops(req.params.service, info => {
 			res.json(info);
 		});
 	}
 
 	serviceInfoAPI(req, res) {
-		transitLinkModel.getServiceInfo(req.params.service, info => {
+		this.transitLinkModel.getServiceInfo(req.params.service, info => {
 			res.json(info);
 		});
 	}
 
 	activeServicesAPI(req, res) {
-		activeBusServicesModel.getActiveBusServices(services => {
+		this.activeBusServicesModel.getActiveBusServices(services => {
 			if (!services.currentlyActiveServices) {
 				res.status(500).json({
 					error: 'Server is currently building data!'
@@ -50,7 +55,7 @@ class BusAPIController extends Controller {
 	}
 
 	apiListAPI(req, res) {
-		busAPIListModel.getAPIList(list => {
+		this.busAPIListModel.getAPIList(list => {
 			res.json(list);
 		});
 	}
@@ -66,7 +71,7 @@ class BusAPIController extends Controller {
 			return;
 		}
 
-		busTimingsAPIModel.getBusStopTimings(busStop, timings => {
+		this.busTimingsAPIModel.getBusStopTimings(busStop, timings => {
 			res.json(timings);
 		});
 	}
