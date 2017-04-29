@@ -6,7 +6,7 @@ cache:
     - node_modules
 
 before_install:
-	- echo '{"accountKey":"key"}' > config.json
+    - echo '{"accountKey":"key"}' > config.json
 
 script: 
     - npm test
