@@ -62,9 +62,8 @@ class ActiveBusServicesModel {
 					serviceNo: `${service.svc}D{${service.dirs.reduce((a,b)=>a+','+b, '').substring(1)}}`,
 				};
 			}).filter(Boolean),
-			lastRefreshTime: services.lastRefreshTime
+			lastRefreshTime: this.cache.lastRefreshTime
 		};
-
 
 		callback(list);
 	}
