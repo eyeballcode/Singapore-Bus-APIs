@@ -1,7 +1,11 @@
 const TransitLink = require('../lib/transit-link.js'),
 	Model = require('./Model');
 
-const transitLinkAPI = new TransitLink()
+const transitLinkAPI = new TransitLink();
+
+var noSuchService = {
+	error: 'The service provided was invalid'
+};
 
 class TransitLinkModel extends Model {
 
@@ -11,7 +15,7 @@ class TransitLinkModel extends Model {
 
 	getServiceInfo(busService, callback) {
 		transitLinkAPI.getBusServiceData(busService, (busService => {
-			if (!busService) callback(null);
+			if (!busService) callback(noSuchService);
 		 	else {
 				delete busService.stops;
 				callback(busService);
@@ -21,7 +25,7 @@ class TransitLinkModel extends Model {
 
 	getServiceStops(busService, callback) {
 		transitLinkAPI.getBusServiceData(busService, (busService => {
-			if (!busService) callback(null);
+			if (!busService) callback(noSuchService);
 			 else {
 				delete busService.operationDays;
 				delete busService.operationTimings;
