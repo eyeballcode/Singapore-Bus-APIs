@@ -20,13 +20,19 @@ class ActiveBusServicesModel {
 
 	cacheUpdater() {
 		this.busServiceAPI.getBusServicesOperatingNow(services => {
+			var uniqueServices = {};
+			for (let service of services) 
+				if (!uniqueServices[service.serviceNo])
+					uniqueServices[service.serviceNo] = {dirs: [service.direction], svc: service.serviceNo};
+				else
+					uniqueServices[service.serviceNo].dirs.push(service.direction);
 			var list = {
-				currentlyActiveServices: services.map(service => {
+				currentlyActiveServices: Object.keys(uniqueServices).map(service => {
+					service = uniqueServices[service];
 					return {
-						serviceNo: service.serviceNo,
-						direction: service.direction
+						serviceNo: `${service.svc}D{${service.dirs.reduce((a,b)=>a+','+b, '').substring(1)}}`,
 					};
-				}),
+				}).filter(Boolean),
 				lastRefreshTime: new Date()
 			};
 			this.cache = list;
