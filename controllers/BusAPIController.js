@@ -18,7 +18,8 @@ class BusAPIController extends Controller {
 		this.get('/timings/:busStop', this.arrivalsAPI);
 		this.get('/services/active', this.activeServicesAPI);
 		this.get('/services/:service/info', this.serviceInfoAPI);
-		this.get('/services/:service/stops', this.serviceStopsAPI)
+		this.get('/services/:service/stops', this.serviceStopsAPI);
+		this.get('/services/:service/:direction/isActive', this.activeQueryAPI);
 		this.get('/services/list', this.serviceListAPI);
 	}
 
@@ -29,6 +30,20 @@ class BusAPIController extends Controller {
 	serviceListAPI(req, res) {
 		this.transitLinkModel.getAllServices(services => {
 			res.json(services);
+		});
+	}
+
+	activeQueryAPI(req, res) {
+		this.activeBusServicesModel.isServiceActive(req.params.service, req.params.direction, (isActive, asOf) => {
+			if (isActive === null) 
+				res.status(500).json({
+					error: 'Server is currently building data!'
+				});
+			else
+				res.json({
+					isActive: isActive,
+					asOf: asOf
+				});
 		});
 	}
 
