@@ -14,7 +14,7 @@ class ActiveBusServicesModel {
 		});
 		this.cache = {};
 
-		setInterval(this.cacheUpdater, 600000);
+		setInterval(this.cacheUpdater.bind(this), 600000);
 		this.cacheUpdater();
 	}
 
@@ -41,7 +41,7 @@ class ActiveBusServicesModel {
 				lastRefreshTime: new Date()
 			};
 			this.cache = list;
-		}, 2);
+		});
 	}
 
 	getActiveBusServices(callback) {
@@ -58,10 +58,8 @@ class ActiveBusServicesModel {
 		var list = {
 			currentlyActiveServices: Object.keys(uniqueServices).map(service => {
 				service = uniqueServices[service];
-				return {
-					serviceNo: `${service.svc}D{${service.dirs.reduce((a,b)=>a+','+b, '').substring(1)}}`,
-				};
-			}).filter(Boolean),
+				return `${service.svc}D{${service.dirs.reduce((a,b)=>a+','+b, '').substring(1)}}`;
+			}),
 			lastRefreshTime: this.cache.lastRefreshTime
 		};
 
