@@ -59,4 +59,13 @@ describe('The Bus API controller', () => {
 		.end(f(done));
 	}, 4);
     });
+    it('should allow querying of all services', done => {
+	controllerMock(app => {
+	    request(app)
+		.get('/bus/services/list')
+		.expect('Content-Type', /json/)
+		.expect(200)
+		.end(f(done));
+	}, 2);
+    });
 });

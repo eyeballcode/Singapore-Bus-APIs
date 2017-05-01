@@ -21,7 +21,7 @@ describe('The TLink Model', () => {
     });
     it('should properly handle NRs and Ns', done => {
 	dbMock(db => {
-	    var model = new TransitLinkModel(db, mockTLink(3));
+        var model = new TransitLinkModel(db, mockTLink(3));
 	    model.getServiceInfo('NR5', info => {
 		expect(info.operator).toEqual('SMRT Buses');
 		done();
