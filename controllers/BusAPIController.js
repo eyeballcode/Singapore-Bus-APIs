@@ -49,12 +49,14 @@ class BusAPIController extends Controller {
 
     serviceStopsAPI(req, res) {
         this.transitLinkModel.getServiceStops(req.params.service, info => {
+	    if (info.error) res.status(400);
             res.json(info);
         });
     }
 
     serviceInfoAPI(req, res) {
         this.transitLinkModel.getServiceInfo(req.params.service, info => {
+	    if (info.error) res.status(400);
             res.json(info);
         });
     }
