@@ -4,7 +4,8 @@
   "description": "A REST API for Singapore's Bus Services",
   "main": "server.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "cover": "istanbul cover --include-all-sources jasmine"
   },
   "author": "Eyeballcode",
   "license": "ISC",
