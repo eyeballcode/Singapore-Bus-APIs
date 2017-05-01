@@ -2,10 +2,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     fs = require('fs'),
     path = require('path'),
-    {
-        MongoClient,
-        Server
-    } = require('mongodb');
+    {MongoClient, Server} = require('mongodb');
 
 const app = express(),
     config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'))),

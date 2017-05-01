@@ -1,4 +1,5 @@
 module.exports = (page, callback) => {
+	callback = callback || (()=>{});
 	if (page === 0)
 		callback({
 			'odata.metadata': 'http://datamall2.mytransport.sg/ltaodataservice/$metadata#BusServices',

@@ -6,7 +6,7 @@ const Controller = require('./Controller'),
 
 class BusAPIController extends Controller {
 
-    constructor(database, transitLinkRequester, activeBusRequester) {
+    constructor(database, transitLinkRequester, activeBusRequester, busAPIRequester) {
         super();
 
         this.busTimingsAPIModel = new BusTimingsAPIModel(),
