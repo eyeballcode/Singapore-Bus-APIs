@@ -40,7 +40,7 @@ class TransitLinkModel extends Model {
 	getAllServices(callback) {
 	    transitLinkAPI.listAllBusServices(services => {
 			callback(services);
-		});
+	    });
 	}
 
 }
