@@ -7,9 +7,9 @@ var noSuchService = {
 
 class TransitLinkModel extends Model {
 
-    constructor(database) {
+    constructor(database, requester) {
         super();
-	this.transitLinkAPI = new TransitLink(database);
+	this.transitLinkAPI = new TransitLink(database, requester);
     }
 
     getServiceInfo(busService, callback) {

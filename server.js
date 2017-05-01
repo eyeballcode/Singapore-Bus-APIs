@@ -32,7 +32,7 @@ mongoClient.connect('mongodb://localhost:27017/singapore-bus-apis', (err, databa
         files.filter(name => name !== 'Controller.js' && name.endsWith('.js')).forEach(name => {
             const Controller = require(path.join(__dirname, 'controllers', name));
             console.log(`Using router ${name.replace(/\.js$/, '')}.`);
-            app.use(Controller.mountPoint, new Controller().router);
+            app.use(Controller.mountPoint, new Controller(db).router);
         });
     });
 
