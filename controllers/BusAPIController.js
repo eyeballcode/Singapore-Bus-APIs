@@ -9,7 +9,7 @@ class BusAPIController extends Controller {
     constructor(database, transitLinkRequester, activeBusRequester, busTimingsRequester) {
         super();
 
-        this.busTimingsAPIModel = new BusTimingsAPIModel(bustimingsRequester),
+        this.busTimingsAPIModel = new BusTimingsAPIModel(busTimingsRequester),
             this.busAPIListModel = new BusAPIListModel(),
             this.activeBusServicesModel = new ActiveBusServicesModel(activeBusRequester),
             this.transitLinkModel = new TransitLinkModel(database, transitLinkRequester);
