@@ -48,7 +48,6 @@ class ActiveBusServicesModel {
     }
 
     getActiveBusServices(callback) {
-
         if (!this.cache.currentlyActiveServices) {
             callback({});
             return
