@@ -30,12 +30,9 @@ class TransitLinkModel extends Model {
 		transitLinkAPI.getBusServiceData(busService, (busService => {
 			if (!busService) callback(noSuchService);
 			 else {
-				delete busService.operationDays;
-				delete busService.operationTimings;
-				delete busService.terminals;
-				delete busService.frequency;
-				delete busService.operator;
-				callback(busService);
+				callback({
+				    directions: busService.stops
+				});
 			}
 		}));
 	}
