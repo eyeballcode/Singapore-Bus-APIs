@@ -1,5 +1,5 @@
 const BusTimingsAPIModel = require('../models/BusTimingsAPIModel'),
-    mockTimings = require('./bus-timing-mock');
+    mockTimings = require('./mock/bus-timing-mock');
 
 const stop49121 = mockTimings(49121),
     stop28009 = mockTimings(28009);
