@@ -12,6 +12,7 @@ class BusAPIController extends Controller {
         this.busTimingsAPIModel = new BusTimingsAPIModel(),
             this.busAPIListModel = new BusAPIListModel(),
             this.activeBusServicesModel = new ActiveBusServicesModel(activeBusRequester),
+            this.activeBusServicesModel = new ActiveBusServicesModel(),
             this.transitLinkModel = new TransitLinkModel(database, transitLinkRequester);
 
         this.get('/', this.apiListAPI);
