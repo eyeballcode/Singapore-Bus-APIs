@@ -8,7 +8,7 @@ const BusAPIController = require('../../controllers/BusAPIController'),
 
 function controllerMock(cb, type) {
     new MongoClient().connect('mongodb://localhost:27017/z', {}, (err, db) => {
-	var controller = new BusAPIController(db, tlinkMock(type || 1), serviceMock, timingsMock);
+	var controller = new BusAPIController(db, tlinkMock(type || 1), serviceMock, timingsMock(49121));
 	var app = express();
 	app.use('/bus', controller.router);
 	app.use((req,res)=>{res.status(404).end();})
