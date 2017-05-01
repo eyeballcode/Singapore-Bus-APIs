@@ -9,7 +9,7 @@ class BusAPIListModel extends Model {
 
     getAPIList(callback) {
         callback({
-            avaliablePaths: {
+            availablePaths: {
                 timings: 'Provides info on bus timings for a given bus stop.',
                 'active-services': 'Provides info on currently running bus services.',
                 'service-info': 'Provides basic info about a bus service.',
