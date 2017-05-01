@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jasmine",
-    "cover": "istanbul cover --include-all-sources jasmine"
+    "cover": "istanbul cover --include-all-sources jasmine -x server.js"
   },
   "author": "Eyeballcode",
   "license": "ISC",

@@ -19,11 +19,29 @@ describe('The TLink Model', () => {
 	    });
 	});
     });
+    it('should properly handle NRs and Ns', done => {
+	dbMock(db => {
+	    var model = new TransitLinkModel(db, mockTLink(3));
+	    model.getServiceInfo('NR5', info => {
+		expect(info.operator).toEqual('SMRT Buses');
+		done();
+	    });
+	});
+    });
     it('should allow getting of stops', done => {
 	dbMock(db => {
 	    var model = new TransitLinkModel(db, mockTLink(1));
 	    model.getServiceStops('925', stops => {
 		expect(stops.directions[1]).toBeDefined();
+		done();
+	    });
+	});
+    });
+    it('should return an error if the service is invalid', done => {
+	dbMock(db => {
+	    var model = new TransitLinkModel(db, mockTLink(4));
+	    model.getServiceStops(':D:D:D:D', stops => {
+		expect(stops.error).toBeDefined();
 		done();
 	    });
 	});
