@@ -35,7 +35,8 @@ class BusAPIController extends Controller {
 
     activeQueryAPI(req, res) {
         this.activeBusServicesModel.isServiceActive(req.params.service, req.params.direction, (isActive, asOf) => {
-            if (isActive === null)
+	    /* istanbul ignore if */
+            if (!isActive)
                 res.status(500).json({
                     error: 'Server is currently building data!'
                 });
@@ -63,6 +64,7 @@ class BusAPIController extends Controller {
 
     activeServicesAPI(req, res) {
         this.activeBusServicesModel.getActiveBusServices(services => {
+	    /* istanbul ignore if */
             if (!services.currentlyActiveServices) {
                 res.status(500).json({
                     error: 'Server is currently building data!'
@@ -94,6 +96,7 @@ class BusAPIController extends Controller {
     }
 
     static get mountPoint() {
+	/* istanbul ignore next */
         return "/bus";
     }
 

@@ -11,6 +11,7 @@ function controllerMock(cb, type) {
 	var controller = new BusAPIController(db, tlinkMock(type || 1), serviceMock, timingsMock(49121));
 	var app = express();
 	app.use('/bus', controller.router);
+	/* istanbul ignore next */
 	app.use((req,res)=>{res.status(404).end();})
         cb(app);
     });
@@ -18,6 +19,7 @@ function controllerMock(cb, type) {
 
 function f(done) {
     return (err,res) => {
+	/* istanbul ignore if: IT'S GOOD THAT THE TEST PASSED OK?? */
 	if (err) done.fail(err); else done();
     }
 }
