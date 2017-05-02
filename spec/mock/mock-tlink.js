@@ -1,10 +1,12 @@
 const fs = require('fs'),
 	path = require('path');
 
-var svc925 = fs.readFileSync(path.join(__dirname, 'svc925.html')).toString();
-var svcNR5 = fs.readFileSync(path.join(__dirname, 'svcNR5.html')).toString();
-var svcNo = fs.readFileSync(path.join(__dirname, 'svcno.html')).toString();
-var allSvcs = fs.readFileSync(path.join(__dirname, 'allsvcs.html')).toString();
+var folder = path.join(__dirname, 'htmls');
+
+var svc925 = fs.readFileSync(path.join(folder, 'svc925.html')).toString();
+var svcNR5 = fs.readFileSync(path.join(folder, 'svcNR5.html')).toString();
+var svcNo = fs.readFileSync(path.join(folder, 'svcno.html')).toString();
+var allSvcs = fs.readFileSync(path.join(folder, 'allsvcs.html')).toString();
 
 module.exports = (type) => {
     switch (type) {
