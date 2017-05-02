@@ -6,13 +6,13 @@ const Controller = require('./Controller'),
 
 class BusAPIController extends Controller {
 
-    constructor(requester) {
+    constructor(database, transitLinkRequester, activeBusRequester, busTimingsRequester) {
         super();
 
-        this.busTimingsAPIModel = new BusTimingsAPIModel(requester),
-            this.busAPIListModel = new BusAPIListModel(requester),
-            this.activeBusServicesModel = new ActiveBusServicesModel(requester),
-            this.transitLinkModel = new TransitLinkModel(requester);
+        this.busTimingsAPIModel = new BusTimingsAPIModel(busTimingsRequester),
+            this.busAPIListModel = new BusAPIListModel(),
+            this.activeBusServicesModel = new ActiveBusServicesModel(activeBusRequester),
+            this.transitLinkModel = new TransitLinkModel(database, transitLinkRequester);
 
         this.get('/', this.apiListAPI);
         this.get('/timings/:busStop', this.arrivalsAPI);
@@ -49,12 +49,14 @@ class BusAPIController extends Controller {
 
     serviceStopsAPI(req, res) {
         this.transitLinkModel.getServiceStops(req.params.service, info => {
+	    if (info.error) res.status(400);
             res.json(info);
         });
     }
 
     serviceInfoAPI(req, res) {
         this.transitLinkModel.getServiceInfo(req.params.service, info => {
+	    if (info.error) res.status(400);
             res.json(info);
         });
     }
