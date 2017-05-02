@@ -19,9 +19,10 @@ class ActiveBusServicesModel {
     }
 
     isServiceActive(serviceNo, direction, callback) {
+	/* istanbul ignore next */
         if (!this.cache.currentlyActiveServices) {
             callback(null);
-            return
+            return;
         }
         for (let service of this.cache.currentlyActiveServices) {
             if (service.serviceNo === serviceNo && service.direction.toString() === direction) {
@@ -48,9 +49,10 @@ class ActiveBusServicesModel {
     }
 
     getActiveBusServices(callback) {
+	/* istanbul ignore next */
         if (!this.cache.currentlyActiveServices) {
             callback({});
-            return
+            return;
         }
         var services = this.cache.currentlyActiveServices;
 
